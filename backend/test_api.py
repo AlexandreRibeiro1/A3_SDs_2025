@@ -8,14 +8,18 @@ reserva = {
     "perfil": "garcom"
 }
 
-# Criar reserva
+print("\n=== Testando criação de reserva ===")
 resposta = requests.post("http://127.0.0.1:5000/reservas", json=reserva)
-print("Criar:", resposta.json())
+print("Status:", resposta.status_code)
+print("Resposta:", resposta.json())
 
-# Confirmar reserva como garçom
+print("\n=== Testando confirmação (garçom) ===")
 resposta = requests.post("http://127.0.0.1:5000/confirmar", json=reserva)
-print("Confirmar:", resposta.json())
+print("Status:", resposta.status_code)
+print("Resposta:", resposta.json())
 
-# Gerar relatório como gerente
+print("\n=== Testando relatório (gerente) ===")
 resposta = requests.get("http://127.0.0.1:5000/relatorios", json={"perfil": "gerente"})
-print("Relatório:", resposta.json())
+print("Status:", resposta.status_code)
+print("Resposta:", resposta.json())
+

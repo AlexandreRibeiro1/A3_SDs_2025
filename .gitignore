@@ -1,0 +1,21 @@
+# Ambiente virtual
+venv/
+ENV/
+env/
+
+# Bytecode Python
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.swp
+*.tmp
+.DS_Store
+
+# Arquivos de IDEs
+.vscode/
+.idea/
+
