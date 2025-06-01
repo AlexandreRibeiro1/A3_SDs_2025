@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatórios - Gerente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Relatórios de Reservas</h1>
+
+    <form id="relatorio-form">
+      <label for="tipo">Tipo de relatório:</label>
+      <select id="tipo" required>
+        <option value="">Selecione</option>
+        <option value="periodo">Reservas por Período</option>
+        <option value="mesa">Reservas por Mesa</option>
+        <option value="garcom">Mesas confirmadas por Garçom</option>
+      </select>
+
+      <div id="filtros"></div>
+
+      <button type="submit">Gerar Relatório</button>
+    </form>
+
+    <div id="resultado-relatorio"></div>
+  </div>
+
+  <script src="gerente.js"></script>
+</body>
+</html>
