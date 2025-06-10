@@ -2,17 +2,12 @@
 
 ## Equipe
 
-Lucas Gaspar Vieira - 12724136365
-
-João Paulo Souza Fontes - 12724113272
-
-Vinicius Reis - 12724120214
-
-Witan de Jesus - 12724123796
-
-Alexandre Ribeiro - 12724133597
-
-Rafael Resende - 1272419793
+- Lucas Gaspar Vieira - 12724136365 
+- João Paulo Souza Fontes - 12724113272 
+- Vinicius de Jesus Rocha Reis - 12724120214 
+- Witan Mendes Paixão Nascimento de Jesus - 12724123796 
+- Alexandre Ribeiro da Silva e Silva - 12724133597 
+- Rafael Felipe Resende Santos - 1272419793
 
 ## Título do Projeto
 
