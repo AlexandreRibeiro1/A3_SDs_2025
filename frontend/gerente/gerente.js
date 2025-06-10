@@ -3,10 +3,44 @@ const filtrosDiv = document.getElementById('filtros');
 const form = document.getElementById('relatorio-form');
 const resultadoDiv = document.getElementById('resultado-relatorio');
 
-// URL base do servidor — altere conforme necessário
-const API_URL = 'http://localhost:5000/relatorios';
+function exibirResultado(dados) {
+  resultadoDiv.innerHTML = '<pre>' + JSON.stringify(dados, null, 2) + '</pre>';
+}
 
-// Atualiza os filtros com base no tipo de relatório
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const tipo = tipoSelect.value;
+  let url = '';
+  let payload = { perfil: 'gerente' };
+
+  if (tipo === 'periodo') {
+    url = 'http://localhost:5000/relatorios/periodo';
+    payload.inicio = document.getElementById('data-inicio').value;
+    payload.fim = document.getElementById('data-fim').value;
+  } else if (tipo === 'mesa') {
+    url = 'http://localhost:5000/relatorios/mesa';
+    payload.mesa = parseInt(document.getElementById('numero-mesa').value);
+  } else if (tipo === 'garcom') {
+    url = 'http://localhost:5000/relatorios/garcom';
+  } else {
+    return;
+  }
+
+  try {
+    const resposta = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const dados = await resposta.json();
+    exibirResultado(dados);
+  } catch (err) {
+    resultadoDiv.textContent = 'Erro ao buscar relatório.';
+  }
+});
+
+// Atualizar filtros
 tipoSelect.addEventListener('change', () => {
   const tipo = tipoSelect.value;
   filtrosDiv.innerHTML = '';
@@ -21,48 +55,6 @@ tipoSelect.addEventListener('change', () => {
       <input type="number" id="numero-mesa" required placeholder="Número da Mesa">
     `;
   } else if (tipo === 'garcom') {
-    filtrosDiv.innerHTML = `
-      <input type="text" id="nome-garcom" required placeholder="Nome do Garçom">
-    `;
-  }
-});
-
-// Envia a requisição para o servidor
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const tipo = tipoSelect.value;
-  let payload = { tipo };
-
-  if (tipo === 'periodo') {
-    payload.inicio = document.getElementById('data-inicio').value;
-    payload.fim = document.getElementById('data-fim').value;
-  } else if (tipo === 'mesa') {
-    payload.mesa = parseInt(document.getElementById('numero-mesa').value);
-  } else if (tipo === 'garcom') {
-    payload.garcom = document.getElementById('nome-garcom').value;
-  }
-
-  try {
-    const resposta = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-
-    const dados = await resposta.json();
-
-    if (!resposta.ok) {
-      resultadoDiv.innerHTML = `<p style="color:red">${dados.mensagem}</p>`;
-    } else {
-      if (dados.resultado && dados.resultado.length > 0) {
-        const lista = dados.resultado.map(item => `<li>${JSON.stringify(item)}</li>`).join('');
-        resultadoDiv.innerHTML = `<ul>${lista}</ul>`;
-      } else {
-        resultadoDiv.innerHTML = `<p>Nenhum dado encontrado.</p>`;
-      }
-    }
-  } catch (erro) {
-    resultadoDiv.innerHTML = `<p style="color:red">Erro ao conectar com o servidor.</p>`;
+    filtrosDiv.innerHTML = `<p>Esse relatório mostra o total de confirmações feitas por cada garçom.</p>`;
   }
 });

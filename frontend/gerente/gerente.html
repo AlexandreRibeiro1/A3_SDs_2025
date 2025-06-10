@@ -11,18 +11,22 @@
     <h1>Relatórios de Reservas</h1>
 
     <form id="relatorio-form">
-      <label for="tipo">Tipo de relatório:</label>
-      <select id="tipo" required>
-        <option value="">Selecione</option>
-        <option value="periodo">Reservas por Período</option>
-        <option value="mesa">Reservas por Mesa</option>
-        <option value="garcom">Mesas confirmadas por Garçom</option>
-      </select>
+  <label for="tipo">Tipo de relatório:</label>
+  <select id="tipo" required>
+    <option value="">Selecione</option>
+    <option value="periodo">Reservas por Período</option>
+    <option value="mesa">Reservas por Mesa</option>
+    <option value="garcom">Mesas confirmadas por Garçom</option>
+  </select>
 
-      <div id="filtros"></div>
+  <div id="filtros">
+    <!-- Os filtros serão inseridos dinamicamente aqui com JavaScript -->
+  </div>
 
-      <button type="submit">Gerar Relatório</button>
-    </form>
+  <button type="submit">Gerar Relatório</button>
+</form>
+
+<div id="resultado-relatorio"></div>
 
     <div id="resultado-relatorio"></div>
   </div>

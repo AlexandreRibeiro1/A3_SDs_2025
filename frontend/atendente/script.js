@@ -2,21 +2,20 @@ const reservaForm = document.getElementById('reserva-form');
 const cancelarForm = document.getElementById('cancelar-form');
 const mensagemDiv = document.getElementById('mensagem');
 
-// URL base do servidor — altere se necessário
-const API_URL = 'http://localhost:5000/reservas';
+const API_URL = 'http://localhost:5000';
 
-// Função para exibir mensagens ao usuário
 function exibirMensagem(texto, erro = false) {
   mensagemDiv.textContent = texto;
   mensagemDiv.style.color = erro ? 'red' : 'green';
   setTimeout(() => mensagemDiv.textContent = '', 5000);
 }
 
-// Enviar nova reserva
+// Criar nova reserva
 reservaForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const dados = {
+    perfil: "atendente",
     nome: document.getElementById('nome').value,
     mesa: parseInt(document.getElementById('mesa').value),
     pessoas: parseInt(document.getElementById('pessoas').value),
@@ -25,7 +24,7 @@ reservaForm.addEventListener('submit', async (e) => {
   };
 
   try {
-    const resposta = await fetch(API_URL, {
+    const resposta = await fetch(`${API_URL}/reservas`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dados)
@@ -33,8 +32,8 @@ reservaForm.addEventListener('submit', async (e) => {
 
     const resultado = await resposta.json();
     exibirMensagem(resultado.mensagem, !resposta.ok);
-  } catch (erro) {
-    exibirMensagem('Erro ao conectar com o servidor.', true);
+  } catch (err) {
+    exibirMensagem("Erro ao conectar com o servidor.", true);
   }
 });
 
@@ -44,11 +43,12 @@ cancelarForm.addEventListener('submit', async (e) => {
 
   const dados = {
     mesa: parseInt(document.getElementById('cancelar-mesa').value),
-    data: document.getElementById('cancelar-data').value
+    data: document.getElementById('cancelar-data').value,
+    hora: document.getElementById('cancelar-hora').value
   };
 
   try {
-    const resposta = await fetch(API_URL, {
+    const resposta = await fetch(`${API_URL}/reservas`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dados)
@@ -56,7 +56,7 @@ cancelarForm.addEventListener('submit', async (e) => {
 
     const resultado = await resposta.json();
     exibirMensagem(resultado.mensagem, !resposta.ok);
-  } catch (erro) {
-    exibirMensagem('Erro ao conectar com o servidor.', true);
+  } catch (err) {
+    exibirMensagem("Erro ao conectar com o servidor.", true);
   }
 });

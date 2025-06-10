@@ -1,7 +1,6 @@
 const form = document.getElementById('confirmar-form');
 const mensagemDiv = document.getElementById('mensagem');
 
-// URL base do servidor — altere se necessário
 const API_URL = 'http://localhost:5000/confirmar';
 
 function exibirMensagem(texto, erro = false) {
@@ -14,8 +13,11 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const dados = {
+    perfil: "garcom",
     mesa: parseInt(document.getElementById('mesa').value),
-    data: document.getElementById('data').value
+    data: document.getElementById('data').value,
+    hora: document.getElementById('hora').value,
+    garcom: document.getElementById('garcom').value
   };
 
   try {
