@@ -4,7 +4,57 @@ const form = document.getElementById('relatorio-form');
 const resultadoDiv = document.getElementById('resultado-relatorio');
 
 function exibirResultado(dados) {
-  resultadoDiv.innerHTML = '<pre>' + JSON.stringify(dados, null, 2) + '</pre>';
+  const div = document.getElementById('resultado-relatorio');
+  div.innerHTML = ''; // limpa antes
+
+  if (dados.reservas) {
+    const tabela = document.createElement('table');
+    tabela.border = 1;
+
+    const thead = tabela.createTHead();
+    const cabecalho = thead.insertRow();
+    const colunas = Object.keys(dados.reservas[0] || {});
+    colunas.forEach(col => {
+      const th = document.createElement('th');
+      th.textContent = col;
+      cabecalho.appendChild(th);
+    });
+
+    const tbody = tabela.createTBody();
+    dados.reservas.forEach(reserva => {
+      const linha = tbody.insertRow();
+      colunas.forEach(col => {
+        const celula = linha.insertCell();
+        celula.textContent = reserva[col];
+      });
+    });
+
+    div.appendChild(tabela);
+  } else if (dados.confirmacoes_por_garcom) {
+    const tabela = document.createElement('table');
+    tabela.border = 1;
+
+    const thead = tabela.createTHead();
+    const cabecalho = thead.insertRow();
+    ['garcom', 'total'].forEach(col => {
+      const th = document.createElement('th');
+      th.textContent = col;
+      cabecalho.appendChild(th);
+    });
+
+    const tbody = tabela.createTBody();
+    dados.confirmacoes_por_garcom.forEach(linha => {
+      const tr = tbody.insertRow();
+      ['garcom', 'total'].forEach(col => {
+        const celula = tr.insertCell();
+        celula.textContent = linha[col];
+      });
+    });
+
+    div.appendChild(tabela);
+  } else {
+    div.textContent = 'Nenhum dado encontrado.';
+  }
 }
 
 form.addEventListener('submit', async (e) => {
